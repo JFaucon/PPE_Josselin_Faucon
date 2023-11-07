@@ -33,6 +33,9 @@ class Forfait
     #[ORM\OneToMany(mappedBy: 'forfait', targetEntity: Reservation::class)]
     private Collection $reservations;
 
+    #[ORM\Column(length: 255)]
+    private ?string $imgPath = null;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
@@ -129,6 +132,18 @@ class Forfait
                 $reservation->setForfait(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImgPath(): ?string
+    {
+        return $this->imgPath;
+    }
+
+    public function setImgPath(string $imgPath): static
+    {
+        $this->imgPath = $imgPath;
 
         return $this;
     }

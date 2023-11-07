@@ -1,9 +1,10 @@
 // app.scss// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
-//@import "bootstrap/scss/functions";
+@import "bootstrap/scss/functions";
 
 // 2. Include any default variable overrides here$primary: darken(#428bca, 20%);
-// 3. Include remainder of required Bootstrap stylesheets@import "bootstrap/scss/variables";
-//@import "bootstrap/scss/mixins";
+// 3. Include remainder of required Bootstrap stylesheets
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
 // 4. INCLURE TOUT
 @import "bootstrap";
 // 4. OU importer quelques composants
@@ -13,7 +14,26 @@
 //@import "bootstrap/scss/images";
 //@import "bootstrap/scss/containers";
 //@import "bootstrap/scss/grid";
-
-body {
-    background-color: blue;
+.homepage{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../public/img/bg.jpg"); /* Chemin de l'image de fond */
+  background-size: cover; /* Ajuster l'image pour couvrir toute la div */
+  background-position: center; /* Centrer l'image horizontalement */
+  height: 100vh; /* Hauteur maximale de 100% de la hauteur de l'écran */
+  color: white;
+  text-shadow: #000000 2px 2px 2px;
+  img{
+    height: 300px;
+  }
+}
+.forfait{
+  display: flex;
+  justify-content: center;
+  > div{
+    margin:5px;
+    width: 15rem;
+  }
 }

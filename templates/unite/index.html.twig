@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Réservations{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4">Mes Réservations</h1>
+        {% for reservation in reservations %}
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h2>Réservation #{{ reservation.number }}</h2>
+                    <a href="{{ path('app_reservation') }}" class="btn btn-primary">Obtenir</a>
+                </div>
+                <div class="card-body">
+                    <p>Forfait : {{ reservation.forfait.name }} x{{ reservation.quantity }}</p>
+                    <p>Fin de l'abonnement le {{ reservation.endDate|date("d/m/Y") }} <a href="{{ url("app_unite_add_time",{"idReservation":reservation.id}) }}" class="btn btn-primary">Prolonger</a></p>
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Baie</th>
+                            <th>Emplacement</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for unite in reservation.unites %}
+                            <tr>
+                                <td>{{ unite.baie.code }}</td>
+                                <td>{{ unite.numSpot }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

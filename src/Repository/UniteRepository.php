@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Reservation;
 use App\Entity\Unite;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,20 +23,36 @@ class UniteRepository extends ServiceEntityRepository
         parent::__construct($registry, Unite::class);
     }
 
-//    /**
-//     * @return Unite[] Returns an array of Unite objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Unite[] Returns an array of Unite objects
+     */
+    public function findByForfait(int $value): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.available = TRUE')
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults($value)
+            //->setParameter(':val', $value)
+
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Unite[] Returns an array of Unite objects
+     */
+    public function findByReservation(Reservation $reservation): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.reservation = :val')
+            ->orderBy('u.id', 'ASC')
+            ->setParameter('val', $reservation->getId())
+
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
 //    public function findOneBySomeField($value): ?Unite
 //    {

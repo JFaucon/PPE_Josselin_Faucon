@@ -36,6 +36,9 @@ class Reservation
     #[ORM\JoinColumn(nullable: false)]
     private ?Forfait $forfait = null;
 
+    #[ORM\Column]
+    private ?int $quantity = null;
+
     public function __construct()
     {
         $this->unites = new ArrayCollection();
@@ -132,6 +135,18 @@ class Reservation
     public function setForfait(?Forfait $forfait): static
     {
         $this->forfait = $forfait;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): static
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }
