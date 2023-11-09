@@ -10,8 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
@@ -32,6 +35,19 @@ class RegistrationController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+//            $errors = $validator->validate($user);
+//
+//            if (count($errors) > 0) {
+//                /*
+//                 * Uses a __toString method on the $errors variable which is a
+//                 * ConstraintViolationList object. This gives us a nice string
+//                 * for debugging.
+//                 */
+//                $errorsString = (string) $errors;
+//
+//                return new Response($errorsString);
+//            }
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -44,6 +60,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
+            $this->addFlash('success', 'Inscription réussie ! Connectez-vous avec vos identifiants.');
 
             return $this->redirectToRoute('app_home');
         }

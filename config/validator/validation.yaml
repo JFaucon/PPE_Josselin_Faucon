@@ -1,0 +1,8 @@
+App\Entity\Client:
+  properties:
+    firstName:
+      - NotBlank:
+          message: "Le prenom ne peux pas être vide"
+    lastName:
+      - NotBlank:
+          message: 'Le nom ne peux pas être vide'

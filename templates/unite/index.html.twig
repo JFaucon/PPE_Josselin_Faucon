@@ -5,11 +5,27 @@
 {% block body %}
     <div class="container">
         <h1 class="mt-4">Mes Réservations</h1>
+        <a href="{{ path('app_reservation') }}" class="btn btn-primary">Obtenir</a>
+        <div>
+        {% set j = 0 %}
+        {% for baie in baies %}
+            <div class="baie">
+                <div class="baie_name">{{ baie.code }}</div>
+                {% for i in 0..41 %}
+                    {% if displayUnite[i+(j*42)] %}
+                        <div class="uni blue"></div>
+                    {% else %}
+                        <div class="uni gray"></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% set j=j+1 %}
+        {% endfor %}
+        </div>
         {% for reservation in reservations %}
             <div class="card mt-4">
                 <div class="card-header">
                     <h2>Réservation #{{ reservation.number }}</h2>
-                    <a href="{{ path('app_reservation') }}" class="btn btn-primary">Obtenir</a>
                 </div>
                 <div class="card-body">
                     <p>Forfait : {{ reservation.forfait.name }} x{{ reservation.quantity }}</p>

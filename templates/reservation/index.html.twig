@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReservationController!{% endblock %}
+{% block title %}Nouvelle Réservation{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
@@ -16,6 +16,22 @@
                             {{ form_row(form.forfait, {
                                 'attr': {'class': 'form-control'}
                             }) }}
+                        </div>
+                        <div class="forfait">
+                            {% for forfait in forfaits %}
+                                <div class="card">
+                                    <img class="card-img-top" src="/{{ forfait.imgPath }}" alt="{{ forfait.name }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ forfait.name }}</h5>
+                                        {% if forfait.discount != 0 %}
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">-{{ forfait.discount }}% </span>
+                                        {% endif %}
+                                        <p class="card-text">{% if forfait.discount != 0 %}<span class="oldPrice">{{ (forfait.discount/100+1)*forfait.price }}€</span><span> </span>{% endif %}{{ forfait.price }}€</p>
+                                        <p class="card-text">{{ forfait.nbSlot }} unité{{ forfait.nbSlot > 1 ? 's' : '' }} disponible{{ forfait.nbSlot > 1 ? 's' : '' }}</p>
+                                        <p class="card-text">Durée de {{ forfait.nbMonth }} mois</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
                         <div class="mb-3">
                             {{ form_row(form.quantity, {

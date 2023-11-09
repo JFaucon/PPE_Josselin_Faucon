@@ -29,6 +29,7 @@ class ReservationController extends AbstractController
 
             $reservation = $form->getData();
 
+            $reservation->setNumber(rand(100000,999999));
             $reservation->setUserr($this->getUser());
             $reservation->setBeginDate(new \DateTime('now'));
             $forfait = $reservation->getForfait();
@@ -44,11 +45,13 @@ class ReservationController extends AbstractController
 
                 foreach ($unites as $unite){
                     $reservation->addUnite($unite);
+                    $unite->setAvailable(false);
                 }
 
                 $entityManager->persist($reservation);
                 $entityManager->flush();
                 // do anything else you need here, like send an email
+                $this->addFlash('success', 'Achat validé! Vous pouvez constater vos unités dans "Vos Unités"');
 
                 return $this->redirectToRoute('app_home');
             }
@@ -58,8 +61,11 @@ class ReservationController extends AbstractController
             $form = $this->createForm(ReservationType::class, $reservation);
         }
 
+        $forfaits = $entityManager->getRepository(Forfait::class)->findAll();
+
         return $this->render('reservation/index.html.twig', [
             'form' => $form,
+            'forfaits'=>$forfaits
         ]);
     }
 }

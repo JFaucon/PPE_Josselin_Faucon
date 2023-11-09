@@ -54,13 +54,15 @@ class UniteRepository extends ServiceEntityRepository
             ;
     }
 
-//    public function findOneBySomeField($value): ?Unite
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findByUser($value): array
+    {
+        return $this->createQueryBuilder('un')
+            ->select('un.id')
+            ->innerJoin('un.reservation', 'r')
+            ->andWhere('r.userr = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getSingleColumnResult()
+            ;
+    }
 }

@@ -3,6 +3,11 @@
 {% block title %}Worktogether Data Solution{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="homepage text-center">
         <img src="{{ asset('img/brand.png') }}" alt="Worktogether Data Solution">
         <h1>Bienvenue chez Worktogether Data Solution</h1>
@@ -16,12 +21,14 @@
             <div class="card">
                 <img class="card-img-top" src="{{ forfait.imgPath }}" alt="{{ forfait.name }}">
                 <div class="card-body">
+                    {% if forfait.discount != 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">-{{ forfait.discount }}% </span>
+                    {% endif %}
                     <h5 class="card-title">{{ forfait.name }}</h5>
-                    <p class="card-text">{{ forfait.price }}€</p>
+                    <p class="card-text">{% if forfait.discount != 0 %}<span class="oldPrice">{{ (forfait.discount/100+1)*forfait.price }}€</span>{% endif %}{{ forfait.price }}€</p>
                     <p class="card-text">{{ forfait.nbSlot }} unité{{ forfait.nbSlot > 1 ? 's' : '' }} disponible{{ forfait.nbSlot > 1 ? 's' : '' }}</p>
                     <p class="card-text">Durée de {{ forfait.nbMonth }} mois</p>
-                    <p class="card-text">Réduction de {{ forfait.discount }}%</p>
-                    <a href="{{ path('app_reservation', {'idForfait': forfait.id}) }}" class="btn btn-primary">Obtenir</a>
+                    <a href="{{ path('app_reservation', {'idForfait': forfait.id}) }}" class="btn btn-info">Obtenir</a>
                 </div>
             </div>
         {% endfor %}

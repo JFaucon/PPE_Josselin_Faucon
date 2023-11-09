@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\BaieRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\UniteRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,14 +15,28 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class UniteController extends AbstractController
 {
     #[Route('/unite', name: 'app_unite')]
-    public function index(ReservationRepository $rr): Response
+    public function index(ReservationRepository $rr , BaieRepository $br, UniteRepository $ur): Response
     {
-        $reservations = $rr->findByUser($this->getUser());
-
+        $user = $this->getUser();
+        $reservations = $rr->findByUser($user);
+        $baies = $br->findByUser($user->getId());
+        $unites = $ur->findByUser($user->getId());
+        $displayUnite = [];
+        foreach ($baies as $baie){
+            foreach ($baie->getUnites() as $unite){
+                if (in_array($unite->getId(),$unites)){
+                    $displayUnite[] = true;
+                }else{
+                    $displayUnite[] = false;
+                }
+            }
+        }
 
 
         return $this->render('unite/index.html.twig', [
             'reservations'=>$reservations,
+            'baies'=>$baies,
+            'displayUnite'=>$displayUnite
         ]);
     }
 

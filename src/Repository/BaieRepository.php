@@ -21,20 +21,23 @@ class BaieRepository extends ServiceEntityRepository
         parent::__construct($registry, Baie::class);
     }
 
-//    /**
-//     * @return Baie[] Returns an array of Baie objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Baie[] Returns an array of Baie objects
+     */
+    public function findByUser($value): array
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.unites', 'un')
+            ->innerJoin('un.reservation', 'r')
+            ->innerJoin('r.userr', 'us')
+            ->andWhere('us.id = :val')
+            ->groupBy('b.id,b.nbSpot,b.code')
+            ->setParameter('val', $value)
+            ->orderBy('b.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Baie
 //    {

@@ -18,7 +18,7 @@ class ReservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('number',HiddenType::class,['data' => rand(100000,999999)])
+            ->add('number',HiddenType::class)
             ->add('beginDate',HiddenType::class)
             ->add('endDate',HiddenType::class)
             ->add('userr',HiddenType::class)
