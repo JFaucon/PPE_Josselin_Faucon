@@ -25,34 +25,34 @@ class AppFixtures extends Fixture
         $data = [
             [
                 'name' => 'Forfait Standard',
-                'price' => 20,
-                'nbSlot' => 10,
+                'price' => 1500,
+                'nbSlot' => 1,
                 'discount' => 0,
                 'nbMonth' => 1,
                 'imgPath' => 'img/bronze.png'
             ],
             [
                 'name' => 'Forfait Premium',
-                'price' => 100,
-                'nbSlot' => 20,
+                'price' => 81000,
+                'nbSlot' => 10,
                 'discount' => 10,
-                'nbMonth' => 3,
+                'nbMonth' => 6,
                 'imgPath' => 'img/silver.png'
             ],
             [
                 'name' => 'Forfait Premium +',
-                'price' => 200,
-                'nbSlot' => 50,
+                'price' => 151200,
+                'nbSlot' => 21,
                 'discount' => 20,
-                'nbMonth' => 3,
+                'nbMonth' => 6,
                 'imgPath' => 'img/gold.png'
             ],
             [
                 'name' => 'Forfait Premium ++',
-                'price' => 300,
-                'nbSlot' => 80,
+                'price' => 264600,
+                'nbSlot' => 21,
                 'discount' => 30,
-                'nbMonth' => 3,
+                'nbMonth' => 12,
                 'imgPath' => 'img/platine.png'
             ]
             // Ajoutez d'autres données ici

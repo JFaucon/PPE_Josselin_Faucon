@@ -26,7 +26,7 @@
                                         {% if forfait.discount != 0 %}
                                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">-{{ forfait.discount }}% </span>
                                         {% endif %}
-                                        <p class="card-text">{% if forfait.discount != 0 %}<span class="oldPrice">{{ (forfait.discount/100+1)*forfait.price }}€</span><span> </span>{% endif %}{{ forfait.price }}€</p>
+                                        <p class="card-text">{% if forfait.discount != 0 %}<span class="oldPrice">{{ (forfait.discount/100+1)*forfait.price/100 }}€</span><span> </span>{% endif %}{{ forfait.price/100 }}€</p>
                                         <p class="card-text">{{ forfait.nbSlot }} unité{{ forfait.nbSlot > 1 ? 's' : '' }} disponible{{ forfait.nbSlot > 1 ? 's' : '' }}</p>
                                         <p class="card-text">Durée de {{ forfait.nbMonth }} mois</p>
                                     </div>

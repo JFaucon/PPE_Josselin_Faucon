@@ -18,15 +18,16 @@ class ReservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('number',HiddenType::class)
-            ->add('beginDate',HiddenType::class)
-            ->add('endDate',HiddenType::class)
-            ->add('userr',HiddenType::class)
+//            ->add('number',HiddenType::class)
+//            ->add('beginDate',HiddenType::class)
+//            ->add('endDate',HiddenType::class)
+//            ->add('userr',HiddenType::class)
             ->add('forfait', EntityType::class, [
                 'class' => Forfait::class,
                 'choice_label' => 'name',
             ])
             ->add('quantity',IntegerType::class,['data' => 1])
+            ->add('renewable')
             ->add('submit', SubmitType::class)
         ;
     }

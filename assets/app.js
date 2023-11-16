@@ -17,7 +17,7 @@ if (document.getElementsByName("reservation")!=null){
 }
 function DisplayForfait() {
     let seletedValue = document.getElementById("reservation_forfait").value;
-    let selectedTitle = document.getElementsByTagName("option")[seletedValue - 4].textContent;
+    let selectedTitle = document.getElementsByTagName("option")[seletedValue - 12].textContent;
     let forfaits = document.getElementsByClassName("forfait")[0].children;
     for (let i = 0; i <forfaits.length; i++) {
         if (selectedTitle === forfaits[i].firstElementChild.nextElementSibling.firstElementChild.innerText) {

@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Forfait;
 use App\Entity\Reservation;
 use App\Entity\Unite;
+use App\Form\EditReservationType;
 use App\Form\ReservationType;
+use App\Repository\ReservationRepository;
 use App\Repository\UniteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,7 +53,7 @@ class ReservationController extends AbstractController
                 $entityManager->persist($reservation);
                 $entityManager->flush();
                 // do anything else you need here, like send an email
-                $this->addFlash('success', 'Achat validé! Vous pouvez constater vos unités dans "Vos Unités"');
+                $this->addFlash('success', 'Achat validé! Vous pouvez constater vos unités dans "Mes Unités"');
 
                 return $this->redirectToRoute('app_home');
             }
@@ -66,6 +68,30 @@ class ReservationController extends AbstractController
         return $this->render('reservation/index.html.twig', [
             'form' => $form,
             'forfaits'=>$forfaits
+        ]);
+    }
+
+    #[Route('/reservation/edit/{idReservation?}', name: 'app_reservation_edit')]
+    public function edit(Request $request,ReservationRepository $rr, EntityManagerInterface $entityManager,?int $idReservation): Response
+    {
+        $reservation = $rr->find($idReservation);
+        $form = $this->createForm(EditReservationType::class, $reservation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reservation = $form->getData();
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+
+
+            $this->addFlash('success', 'Les changements ont été effectués');
+            return $this->redirectToRoute('app_home');
+        }
+
+
+        return $this->render('reservation/edit.html.twig', [
+            'reservation'=>$reservation,
+            'form'=>$form
         ]);
     }
 }

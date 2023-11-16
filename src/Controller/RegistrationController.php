@@ -36,18 +36,6 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-//            $errors = $validator->validate($user);
-//
-//            if (count($errors) > 0) {
-//                /*
-//                 * Uses a __toString method on the $errors variable which is a
-//                 * ConstraintViolationList object. This gives us a nice string
-//                 * for debugging.
-//                 */
-//                $errorsString = (string) $errors;
-//
-//                return new Response($errorsString);
-//            }
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(

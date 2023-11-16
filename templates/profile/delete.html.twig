@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le Profil{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="text-center"><img src="/img/brand.png" width="60" alt=""><br>Supprimer le compte</h1>
+                    </div>
+                    <div class="card-body">
+                        {{ form_errors(form) }}
+                        {{ form_start(form,{attr: {'novalidate': 'novalidate'}}) }}
+
+                        <div class="mb-3">
+                            {{ form_row(form.password, {
+                                label: 'Mot de passe'
+                            }) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

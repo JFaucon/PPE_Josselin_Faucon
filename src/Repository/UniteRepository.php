@@ -65,4 +65,18 @@ class UniteRepository extends ServiceEntityRepository
             ->getSingleColumnResult()
             ;
     }
+
+    public function UpdateByReservation(Reservation $reservation): int
+    {
+        return $this->createQueryBuilder('u')
+            ->update(Unite::class,'u')
+            ->set('u.available','TRUE')
+            ->set('u.reservation','NULL')
+            ->andWhere('u.reservation = :val')
+            ->setParameter('val', $reservation->getId())
+
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
 }

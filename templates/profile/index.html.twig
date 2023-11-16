@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="text-center"><img src="/img/brand.png" width="60" alt=""><br>Mon Profil</h1>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Nom : {{ user.lastName }}</h5>
+                        <h5 class="card-title">Prénom : {{ user.firstName }}</h5>
+                        <h5 class="card-title">Email : {{ user.email }}</h5>
+                        <a class="btn btn-outline-danger" href="{{ path('app_profile_delete') }}">Supprimer ce compte</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Réservation{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <a href="{{ url("app_unite") }}" class="btn btn-primary">< Mes unites</a>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="text-center">Modifier la reservation #{{ reservation.number }}</h1>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text oldPrice">Fin de l'abonnement le {{ reservation.endDate|date("d/m/Y") }}</p>
+                        {{ form(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

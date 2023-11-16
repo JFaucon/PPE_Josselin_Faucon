@@ -41,6 +41,11 @@ class UpdatedbCommand extends Command
             if ($UniteReservation != null) {
                 $available = false;
                 if ($UniteReservation->getEndDate() < new \DateTime('now')) {
+                    if ($UniteReservation->isRenewable()){
+                        $dateDeFin = clone $UniteReservation->getEndDate();
+                        $dateDeFin->modify("+" . $UniteReservation->getForfait()->getNbMonth() . " months");
+                        $UniteReservation->setEndDate($dateDeFin);
+                    }else{
                     $unitesAvailable = $UniteReservation->getUnites();
                     foreach ($unitesAvailable as $uniteAvailable) {
                         $uniteAvailable->setReservation(null);
@@ -49,6 +54,7 @@ class UpdatedbCommand extends Command
                     $this->entityManager->remove($UniteReservation);
                     $this->entityManager->flush();
                     $available = true;
+                    }
                 }
             } else {
                 $available = true;

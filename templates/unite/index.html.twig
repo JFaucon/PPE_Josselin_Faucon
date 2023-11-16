@@ -29,8 +29,11 @@
                 </div>
                 <div class="card-body">
                     <p>Forfait : {{ reservation.forfait.name }} x{{ reservation.quantity }}</p>
-                    <p>Fin de l'abonnement le {{ reservation.endDate|date("d/m/Y") }} <a href="{{ url("app_unite_add_time",{"idReservation":reservation.id}) }}" class="btn btn-primary">Prolonger</a></p>
-
+                    {% if reservation.renewable %}
+                        <p>renouvellement automatique <a href="{{ url("app_reservation_edit",{"idReservation":reservation.id}) }}" class="btn btn-primary">Modifier</a></p>
+                    {% else %}
+                        <p>Fin de l'abonnement le {{ reservation.endDate|date("d/m/Y") }} <a href="{{ url("app_unite_add_time",{"idReservation":reservation.id}) }}" class="btn btn-primary">Prolonger</a><a href="{{ url("app_reservation_edit",{"idReservation":reservation.id}) }}" class="btn btn-primary">Modifier</a></p>
+                    {% endif %}
                     <table class="table table-striped">
                         <thead>
                         <tr>

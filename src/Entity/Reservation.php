@@ -39,6 +39,9 @@ class Reservation
     #[ORM\Column]
     private ?int $quantity = null;
 
+    #[ORM\Column]
+    private ?bool $renewable = null;
+
     public function __construct()
     {
         $this->unites = new ArrayCollection();
@@ -147,6 +150,18 @@ class Reservation
     public function setQuantity(int $quantity): static
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function isRenewable(): ?bool
+    {
+        return $this->renewable;
+    }
+
+    public function setRenewable(bool $renewable): static
+    {
+        $this->renewable = $renewable;
 
         return $this;
     }
