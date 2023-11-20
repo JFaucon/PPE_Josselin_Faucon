@@ -4,6 +4,7 @@
 
 {% block body %}
     <div class="container mt-5">
+        <a href="{{ url("app_profile") }}" class="btn btn-primary">< Mon profil</a>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
@@ -19,6 +20,7 @@
                                 label: 'Mot de passe'
                             }) }}
                         {{ form_end(form) }}
+                        </div>
                     </div>
                 </div>
             </div>

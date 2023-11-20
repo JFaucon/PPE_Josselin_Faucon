@@ -11,6 +11,13 @@
                         <h1 class="text-center"><img src="/img/brand.png" width="60" alt=""><br>Mon Profil</h1>
                     </div>
                     <div class="card-body">
+                        {% if user.profileImage != null %}
+                            <img src="{{ asset('uploads/' ~ user.profileImage) }}" class="card-img" alt="Profile Image">
+                            <a class="btn btn-outline-info" href="{{ path('app_profile_imgdelete') }}">Supprimer l'image</a>
+                        {% else %}
+                            <p>No profile image yet.</p>
+                            {{ form(form) }}
+                        {% endif %}
                         <h5 class="card-title">Nom : {{ user.lastName }}</h5>
                         <h5 class="card-title">Prénom : {{ user.firstName }}</h5>
                         <h5 class="card-title">Email : {{ user.email }}</h5>

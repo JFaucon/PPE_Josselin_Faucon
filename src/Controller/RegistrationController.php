@@ -26,7 +26,7 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        $password =  $form->get('plainPassword')->getData();
+        $password =  $form->get('password')->getData();
         $confirmPassword =  $form->get('confirmPassword')->getData();
 
         if($password !== $confirmPassword){
@@ -40,7 +40,7 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
             $user->setRoles(["ROLE_CLIENT"]);

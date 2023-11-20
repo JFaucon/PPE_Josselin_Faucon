@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Form\ProfileDeleteType;
+use App\Form\UserType;
 use App\Repository\ReservationRepository;
 use App\Repository\UniteRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,11 +21,42 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    public function index(): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form['profileImage']->getData();
+            $fileExtension = $file->guessExtension();
+            if (!($fileExtension == 'png' || $fileExtension == 'jpg' || $fileExtension == 'gif')){
+                $form->get("profileImage")->addError(new FormError("le fichier n'est pas valide"));
+            }
+            if ($form->isValid()){
+
+                if ($file) {
+                    $uploadsDirectory = $this->getParameter('uploads_directory');
+                    $filename = md5(uniqid()) . '.' . $file->guessExtension();
+                    $file->move(
+                        $uploadsDirectory,
+                        $filename
+                    );
+
+                    $user->setProfileImage($filename);
+                }
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                // Rediriger vers la page de profil ou une autre page après la mise à jour du profil
+                return $this->redirectToRoute('app_profile');
+            }
+        }
         return $this->render('profile/index.html.twig', [
-            'user'=>$user
+            'user'=>$user,
+            'form'=>$form
         ]);
     }
 
@@ -66,5 +98,18 @@ class ProfileController extends AbstractController
             'user'=>$user,
             'form'=>$form
         ]);
+    }
+
+    #[Route('/profile/imgdelete', name: 'app_profile_imgdelete')]
+    public function imgdelete(EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $base_dir = realpath($_SERVER["DOCUMENT_ROOT"]);
+        $filePath = $base_dir.'/uploads/'.$user->getProfileImage();
+        unlink($filePath);
+        $user->setProfileImage(null);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_profile');
     }
 }

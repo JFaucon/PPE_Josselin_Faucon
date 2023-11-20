@@ -72,3 +72,18 @@ nav{
 .alert{
   margin-bottom: 0;
 }
+.cercle {
+  width: 30px;
+  height: 30px;
+  position: fixed; /* Positionnement fixe par rapport à la fenêtre d'affichage */
+  bottom: 5px;
+  right: 5px;
+  background-color: rgba(30,30,30,0.7); /* Couleur de fond de la div, remplacez par votre couleur préférée */
+  color: #fff; /* Couleur du texte, remplacez par votre couleur préférée */
+  padding: 10px; /* Marge intérieure pour le contenu */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  text-decoration: none;
+}

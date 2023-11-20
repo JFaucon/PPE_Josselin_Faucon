@@ -15,7 +15,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="{{ path("app_home") }}">
-                <img src="img/brand.png" width="60" alt="">
+                <img src="/img/brand.png" width="60" alt="">
             </a>
             <a class="navbar-brand mb-0 h1" href="{{ path("app_home") }}">WorkTogether Data Solution</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,5 +50,8 @@
             </div>
         </nav>
         {% block body %}{% endblock %}
+        <a class="cercle" href="{{ path('app_report') }}">
+            <div>?</div>
+        </a>
     </body>
 </html>

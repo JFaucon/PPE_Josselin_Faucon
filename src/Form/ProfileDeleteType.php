@@ -14,7 +14,7 @@ class ProfileDeleteType extends AbstractType
     {
         $builder
             ->add('password', PasswordType::class, ['label'=>'Mot de passe'])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class,['label'=>'Supprimer le compte DEFINITIVEMENT'])
         ;
     }
 

@@ -2,7 +2,34 @@ App\Entity\Client:
   properties:
     firstName:
       - NotBlank:
-          message: "Le prenom ne peux pas être vide"
+          message: "Le prenom ne peut pas être vide"
     lastName:
       - NotBlank:
-          message: 'Le nom ne peux pas être vide'
+          message: 'Le nom ne peut pas être vide'
+
+App\Entity\User:
+  properties:
+    email:
+      - Email:
+          message: "L'email {{ value }} n'est pas valide"
+      - NotBlank:
+          message: "L'email ne peut pas être vide"
+    password:
+      - NotBlank:
+          message: 'Le mot de passe ne peut pas être vide'
+      - Length:
+          min: 6
+          minMessage: 'Votre mot de passe doit faire au moins {{ limit }} caractères'
+    profileImage:
+      - Image:
+          maxSize: "3M"
+          maxSizeMessage: "La taille maximale autorisée est 3Mo."
+
+App\Entity\Report:
+  properties:
+    Subject:
+      - NotBlank:
+          message: "L'object ne peut pas être vide"
+    object:
+      - NotBlank:
+          message: 'Le corps ne peut pas être vide'
