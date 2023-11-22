@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Unite;
+use Mailjet\Resources;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -45,6 +46,28 @@ class UpdatedbCommand extends Command
                         $dateDeFin = clone $UniteReservation->getEndDate();
                         $dateDeFin->modify("+" . $UniteReservation->getForfait()->getNbMonth() . " months");
                         $UniteReservation->setEndDate($dateDeFin);
+                        $mj = new \Mailjet\Client('09bd773c9b8a9d62c4731f6a209c76c4','070e803f1b1dac2021b0c876c227fdd5',true,['version' => 'v3.1']);
+                        $body = [
+                            'Messages' => [
+                                [
+                                    'From' => [
+                                        'Email' => "josselinfaucon@gmail.com",
+                                        'Name' => "WorkTogether"
+                                    ],
+                                    'To' => [
+                                        [
+                                            'Email' => $this->getUser()->getEmail(),
+                                            'Name' => $this->getUser()->getEmail()
+                                        ]
+                                    ],
+                                    'Subject' => "Votre reservation Worktogether a été renouveller",
+                                    'TextPart' => "Mailjet email",
+                                    'HTMLPart' => "<h1>WorkTogether</h1><h2>la reservation {$UniteReservation->getNumber()} a été mise a jour jusqu'au {$UniteReservation->getEndDate()} a {$UniteReservation->getForfait()->getPrice()}centime x{$UniteReservation->getQuantity()}</h2>",
+                                    'CustomID' => "MailRenewable"
+                                ]
+                            ]
+                        ];
+                        $mj->post(Resources::$Email, ['body' => $body]);
                     }else{
                     $unitesAvailable = $UniteReservation->getUnites();
                     foreach ($unitesAvailable as $uniteAvailable) {

@@ -85,6 +85,9 @@ class ProfileController extends AbstractController
                     $entityManager->remove($reservation);
                     $entityManager->flush();
                 }
+                $base_dir = realpath($_SERVER["DOCUMENT_ROOT"]);
+                $filePath = $base_dir.'/uploads/'.$user->getProfileImage();
+                unlink($filePath);
                 $entityManager->remove($user);
                 $entityManager->flush();
 

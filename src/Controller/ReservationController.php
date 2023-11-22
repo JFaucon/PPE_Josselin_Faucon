@@ -10,6 +10,7 @@ use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use App\Repository\UniteRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Mailjet\Resources;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +55,7 @@ class ReservationController extends AbstractController
                 $entityManager->flush();
                 // do anything else you need here, like send an email
                 $this->addFlash('success', 'Achat validé! Vous pouvez constater vos unités dans "Mes Unités"');
+                $this->ReservationMail($reservation);
 
                 return $this->redirectToRoute('app_home');
             }
@@ -93,5 +95,31 @@ class ReservationController extends AbstractController
             'reservation'=>$reservation,
             'form'=>$form
         ]);
+    }
+
+    public function ReservationMail(Reservation $reservation): void
+    {
+        $mj = new \Mailjet\Client('09bd773c9b8a9d62c4731f6a209c76c4','070e803f1b1dac2021b0c876c227fdd5',true,['version' => 'v3.1']);
+        $body = [
+            'Messages' => [
+                [
+                    'From' => [
+                        'Email' => "josselinfaucon@gmail.com",
+                        'Name' => "WorkTogether"
+                    ],
+                    'To' => [
+                        [
+                            'Email' => $this->getUser()->getEmail(),
+                            'Name' => $this->getUser()->getEmail()
+                        ]
+                    ],
+                    'Subject' => "Votre reservation Worktogether",
+                    'TextPart' => "Mailjet email",
+                    'HTMLPart' => "<h1>Confirmation de commande</h1> <p>Merci pour votre commande. Votre achat a bien été confirmé.</p> <p>Voici le récapitulatif de votre commande :</p>Forfait : {$reservation->getForfait()->getName()}<br>Nombre d'unité : {$reservation->getForfait()->getNbSlot()}<br>Montant : ".$reservation->getForfait()->getPrice()/100*$reservation->getQuantity()."<p>Si vous avez des questions, n'hésitez pas à nous contacter.</p> <p>Merci encore pour votre achat !</p>",
+                    'CustomID' => "MailReservation"
+                ]
+            ]
+        ];
+        $mj->post(Resources::$Email, ['body' => $body]);
     }
 }
