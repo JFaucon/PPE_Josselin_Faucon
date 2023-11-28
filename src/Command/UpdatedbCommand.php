@@ -62,7 +62,7 @@ class UpdatedbCommand extends Command
                                     ],
                                     'Subject' => "Votre reservation Worktogether a été renouveller",
                                     'TextPart' => "Mailjet email",
-                                    'HTMLPart' => "<h1>WorkTogether</h1><h2>la reservation {$UniteReservation->getNumber()} a été mise a jour jusqu'au {$UniteReservation->getEndDate()} a {$UniteReservation->getForfait()->getPrice()}centime x{$UniteReservation->getQuantity()}</h2>",
+                                    'HTMLPart' => "<h1>WorkTogether</h1><div>la reservation {$UniteReservation->getNumber()} a été mise a jour jusqu'au {$UniteReservation->getEndDate()}</p>Forfait : {$reservation->getForfait()->getName()}<br>Nombre d'unité : {$reservation->getForfait()->getNbSlot()}<br>Montant : ".$reservation->getForfait()->getPrice()/100*$reservation->getQuantity()."<p>Si vous avez des questions, n'hésitez pas à nous contacter.</p> <p>Merci encore pour votre achat !</p></div>",
                                     'CustomID' => "MailRenewable"
                                 ]
                             ]
