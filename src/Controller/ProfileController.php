@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Form\ProfileDeleteType;
 use App\Form\UserType;
+use App\Repository\ReportRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\UniteRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -61,7 +62,7 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/profile/delete', name: 'app_profile_delete')]
-    public function delete(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, ReservationRepository $rr, UniteRepository $ur, TokenStorageInterface $tokenStorage): Response
+    public function delete(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, ReservationRepository $rr, UniteRepository $ur, TokenStorageInterface $tokenStorage , ReportRepository $rer): Response
     {
         $userInterface = $this->getUser();
         $user=$entityManager->getRepository(Client::class)->find($userInterface->getId());
@@ -83,6 +84,11 @@ class ProfileController extends AbstractController
 
                     $ur->UpdateByReservation($reservation);
                     $entityManager->remove($reservation);
+                    $entityManager->flush();
+                }
+                $reports = $rer->findByUser($user);
+                foreach ($reports as $report){
+                    $report->setUserr(null);
                     $entityManager->flush();
                 }
                 $base_dir = realpath($_SERVER["DOCUMENT_ROOT"]);
