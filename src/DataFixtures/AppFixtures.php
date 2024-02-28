@@ -72,7 +72,7 @@ class AppFixtures extends Fixture
         }
 
         $manager->flush();
-/*
+
         // Création de données de test pour les utilisateurs
         $userData = [
             [
@@ -111,7 +111,7 @@ class AppFixtures extends Fixture
         }
 
         $manager->flush();
-*/
+
         $baieData = [
             [
                 'nbSpot' => 42,
