@@ -1,9 +1,9 @@
 version: '3.8'
 services:
   app:
-    image: worktogether-app:test
+    image: fauconjosselin/worktogether:3df64435e3903bc590c02587cf45dfd16123ea3b
     ports:
-      - "8084:80"
+      - "80:80"
     depends_on:
       - db
     environment:
