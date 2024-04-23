@@ -15,7 +15,7 @@
                             <img src="{{ asset('uploads/' ~ user.profileImage) }}" class="card-img" alt="Profile Image">
                             <a class="btn btn-outline-info" href="{{ path('app_profile_imgdelete') }}">Supprimer l'image</a>
                         {% else %}
-                            <p>No profile image yet.</p>
+                            <p>Pas encore d'image de profile</p>
                             {{ form(form) }}
                         {% endif %}
                         <h5 class="card-title">Nom : {{ user.lastName }}</h5>

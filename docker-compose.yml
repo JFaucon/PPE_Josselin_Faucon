@@ -1,16 +1,24 @@
-version: '3'
-
+version: '3.8'
 services:
-  redis:
-    image: redis:7.2-alpine
-    restart: always
+  app:
+    image: worktogether-app:test
     ports:
-      - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning --requirepass redis_password
+      - "8084:80"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=sqlsrv://sa:sql2022_@db/WorkTogether
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=sql2022_
+    ports:
+      - "1434:1433"
     volumes:
-      - redis:/data
+      - db-data:/var/opt/mssql
 
 volumes:
-  ###> doctrine/doctrine-bundle ###
-  redis:
-###< doctrine/doctrine-bundle ###
+  db-data:
+

@@ -3,17 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Forfait;
-use App\Service\Redis;
+//use App\Service\Redis;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use \Mailjet\Resources;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(EntityManagerInterface $entityManager, Redis $redis): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
         /*$redisClient = $redis->getClient();
         $redisClient->hmset("player:1234",[

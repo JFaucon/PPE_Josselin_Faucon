@@ -20,6 +20,7 @@ hosts:
     env:
       APP_ENV: prod
       APP_DEBUG: 0
+      COMPOSER_ALLOW_SUPERUSER: 1
 
 tasks:
   deploy:upload_assets:
@@ -32,11 +33,11 @@ tasks:
     - runLocally: 'yarn install'
     - runLocally: 'yarn encore production'
 
-#  deploy:change_ownership:
-#    - run: 'chown -R www-data:www-data {{release_path}}/public'
+  deploy:change_ownership:
+    - run: 'chown -R www-data:www-data {{release_path}}'
 
 after:
   deploy:failed: 'deploy:unlock'
   deploy:vendors: 'deploy:build'
   deploy:build: 'deploy:upload_assets'
-#  deploy:upload_assets: 'deploy:change_ownership'
+  deploy:upload_assets: 'deploy:change_ownership'

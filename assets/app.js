@@ -9,7 +9,7 @@
 import './styles/app.scss';
 import 'bootstrap/dist/js/bootstrap.min'
 
-if (document.getElementsByName("reservation")!=null){
+if (document.getElementsByName("reservation").length!==0){
     document.getElementById("reservation_forfait").addEventListener('change', (event) => {
         DisplayForfait();
     });

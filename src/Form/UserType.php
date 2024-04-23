@@ -18,7 +18,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('profileImage', FileType::class, [
-                'label' => 'Profile Image',
+                'label' => 'Image de profil',
                 'mapped' => false, // This field is not mapped to any property on the entity
             ])
             ->add('Envoyer',SubmitType::class)
