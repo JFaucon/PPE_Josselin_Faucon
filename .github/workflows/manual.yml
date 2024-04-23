@@ -29,5 +29,3 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USER }}/worktogether:${{github.sha}}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
