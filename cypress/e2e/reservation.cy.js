@@ -12,6 +12,6 @@ describe('Reservation', () => {
     cy.get('form').submit()
 
     // Vérifiez que la réservation a été effectuée avec succès
-    cy.url().should('eq', 'http://localhost:8000/');
+    cy.location('pathname').should('eq', '/');
   })
 })
