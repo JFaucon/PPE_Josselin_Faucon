@@ -39,8 +39,6 @@ WORKDIR /var/www/html
 
 COPY --chown=www-data: . .
 
-RUN chown -R www-data: ./
-
 USER www-data
 
 ENV APP_ENV prod

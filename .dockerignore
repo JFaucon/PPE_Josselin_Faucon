@@ -29,7 +29,6 @@ tests/
 var/
 vendor/
 cypress/
-assets/
 node_modules/
 .editorconfig
 .env.*.local
